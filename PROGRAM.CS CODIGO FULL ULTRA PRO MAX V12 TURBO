@@ -1,0 +1,79 @@
+  using PokemonAPI.Models;
+using PokemonAPI.Services;
+
+namespace PokemonAPI
+{
+    class Program
+    {
+        static async Task Main(string[] args)
+        {
+            PokemonService service = new PokemonService();
+
+            Console.Write("Digite o nome do Pokemon: ");
+
+            string nome = Console.ReadLine();
+
+            Pokemon pokemon = await service.BuscarPokemon(nome);
+
+            if (pokemon == null)
+            {
+                Console.WriteLine("Pokemon não encontrado!");
+            }
+            else
+            {
+                Console.WriteLine();
+                Console.WriteLine("Pokemon encontrado!");
+                Console.WriteLine("----------------------");
+
+                Console.WriteLine($"ID: {pokemon.Id}");
+                Console.WriteLine($"Nome: {pokemon.Name}");
+                Console.WriteLine($"Altura: {pokemon.Height}");
+                Console.WriteLine($"Peso: {pokemon.Weight}");
+                Console.WriteLine($"Base experience: {pokemon.BaseExperience}");
+
+                Console.Write("Tipos: ");
+
+                foreach (string tipo in pokemon.Types)
+                {
+                    Console.Write(tipo + " ");
+                }
+
+                Console.WriteLine();
+            }
+
+            // Exercício 6 - Pokemon aleatório
+            Console.WriteLine();
+            Console.Write("Deseja buscar um Pokemon aleatório? (s/n): ");
+
+            string opcao = Console.ReadLine();
+
+            if (opcao.ToLower() == "s")
+            {
+                Pokemon aleatorio = await service.BuscarPokemonAleatorio();
+
+                Console.WriteLine();
+                Console.WriteLine("Pokemon aleatório encontrado!");
+                Console.WriteLine("-----------------------------");
+
+                Console.WriteLine($"ID: {aleatorio.Id}");
+                Console.WriteLine($"Nome: {aleatorio.Name}");
+                Console.WriteLine($"Altura: {aleatorio.Height}");
+                Console.WriteLine($"Peso: {aleatorio.Weight}");
+                Console.WriteLine($"Base experience: {aleatorio.BaseExperience}");
+
+                Console.Write("Tipos: ");
+
+                foreach (string tipo in aleatorio.Types)
+                {
+                    Console.Write(tipo + " ");
+                }
+
+                Console.WriteLine();
+            }
+
+            Console.WriteLine();
+            Console.WriteLine("Pressione qualquer tecla para sair...");
+            Console.ReadKey();
+        }
+    }
+}
